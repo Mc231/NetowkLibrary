@@ -11,6 +11,6 @@ import Foundation
 /// HTTPHeaderValue constatns
 public struct HTTPHeaderValue {
     public static let applicationJson = "application/json"
-    public static let xWWWFormUrlencoded = "application/x-www-form-urlencoded; charset=utf-8"
+    public static let xWWWFormUrlEncoded = "application/x-www-form-urlencoded; charset=utf-8"
     public static let multipartFromData = "multipart/form-data"
 }

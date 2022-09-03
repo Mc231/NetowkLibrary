@@ -8,12 +8,11 @@
 import Foundation
 
 public extension EndPoint {
-	
-	var defaultTimeout: TimeInterval {
-		return 10.0
-	}
-	
-	var timeout: TimeInterval {
-		return defaultTimeout
-	}
+    var defaultTimeout: TimeInterval {
+        return 10.0
+    }
+
+    var timeout: TimeInterval {
+        return defaultTimeout
+    }
 }

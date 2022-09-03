@@ -8,10 +8,10 @@
 
 import Foundation
 
-/// SPecialized error types that could occur
+/// Specialized error types that could occur
 public enum NetworkLibraryError: Error, Equatable {
     case encodingFailed
     case invalidUrl
-    case decodingFaield
-	case invalidResponse(_ response: URLResponse?)
+    case decodingFailed
+    case invalidResponse(_ response: URLResponse?)
 }

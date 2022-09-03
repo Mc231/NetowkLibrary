@@ -8,12 +8,11 @@
 import Foundation
 
 public extension Parameters {
-	
-	/// Convert parameters to query items
-	var asQueryItems: [URLQueryItem] {
-		return reduce(into: [URLQueryItem]()) { (result, iteration) in
-			let item = URLQueryItem(name: iteration.key, value: "\(iteration.value)".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))
-			result.append(item)
-		}
-	}
+    /// Convert parameters to query items
+    var asQueryItems: [URLQueryItem] {
+        return reduce(into: [URLQueryItem]()) { result, iteration in
+            let item = URLQueryItem(name: iteration.key, value: "\(iteration.value)".addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))
+            result.append(item)
+        }
+    }
 }

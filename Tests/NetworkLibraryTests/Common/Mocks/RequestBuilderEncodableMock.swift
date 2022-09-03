@@ -8,5 +8,5 @@
 import Foundation
 
 struct RequestBuilderEncodableMock: Codable {
-	let stub: String
+    let stub: String
 }

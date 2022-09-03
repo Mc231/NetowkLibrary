@@ -8,6 +8,6 @@
 import Foundation
 
 struct EncodableMock: Encodable {
-	let testField: String
-	let testFieldTwo: Int
+    let testField: String
+    let testFieldTwo: Int
 }

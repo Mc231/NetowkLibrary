@@ -48,6 +48,23 @@ final class URLSessionRouterTests: XCTestCase {
 		}
 		wait(for: [promise], timeout: 1.0)
 	}
+	
+	func testThrowsErrorWhenPerformingTaskWithBadParametersAsync() async {
+		// Given
+		let endpoint = MockEnpoint.badMock
+		do {
+			// When
+			 try await sut.performVoidTask(to: endpoint)
+			XCTFail("Should throw error")
+		} catch {
+			// Then
+			if let networkError = error as? NetworkLibraryError {
+				XCTAssertEqual(networkError, .encodingFailed)
+			} else {
+				XCTFail("Should be NetworkLibraryError")
+			}
+		}
+	}
 
 	func testTaskSuccess() {
 		// Given
@@ -75,6 +92,29 @@ final class URLSessionRouterTests: XCTestCase {
 			promise.fulfill()
 		})
 		wait(for: [promise], timeout: 1)
+	}
+	
+	func testTaskSuccessAsync() async throws {
+		// Given
+		let data = "Success".data(using: .utf8)!
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 200,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		// When
+		let result: ResponseEntry = try await sut.performTask(to: MockEnpoint.mock)
+		// Then
+		XCTAssertEqual(result.data, data)
+		if let response = result.response as? HTTPURLResponse {
+			XCTAssertEqual(response.statusCode, 200)
+			XCTAssertTrue(response.allHeaderFields.isEmpty)
+			XCTAssertEqual(response.url, URLSessionRouterTests.baseURL)
+		} else {
+			XCTFail("Response must be of type HTTPURLResponse")
+		}
 	}
 	
 	func testTaskReturnsBadStatusCode() {
@@ -107,6 +147,68 @@ final class URLSessionRouterTests: XCTestCase {
 		wait(for: [promise], timeout: 1)
 	}
 	
+	func testTaskReturnsBadStatusCodeAsync() async throws {
+		// Given
+		let data = "Failure".data(using: .utf8)!
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 300,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		do {
+			// When
+			let _ : ResponseEntry = try await sut.performTask(to: MockEnpoint.mock)
+		} catch {
+			if case .invalidResponse(let errorResponse) = error as? NetworkLibraryError, let response = errorResponse as? HTTPURLResponse {
+				XCTAssertEqual(response.statusCode, 300)
+				XCTAssertEqual(response.url, URLSessionRouterTests.baseURL)
+			} else {
+				XCTFail("Error should be instance of NetworkLibraryError")
+			}
+		}
+	}
+	
+	func testDataTaskSuccessAsync() async throws {
+		// Given
+		let data = "Success".data(using: .utf8)!
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 200,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		// When
+		let result: Data = try await sut.performTask(to: MockEnpoint.mock)
+		// Then
+		XCTAssertEqual(result, data)
+	}
+	
+	func testDataTaskFailedAsync() async throws {
+		// Given
+		let data = "Failed".data(using: .utf8)!
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 400,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		do {
+			// When
+			let _ : Data = try await sut.performTask(to: MockEnpoint.mock)
+		} catch {
+			if case .invalidResponse(let errorResponse) = error as? NetworkLibraryError, let response = errorResponse as? HTTPURLResponse {
+				XCTAssertEqual(response.statusCode, 400)
+				XCTAssertEqual(response.url, URLSessionRouterTests.baseURL)
+			} else {
+				XCTFail("Error should be instance of NetworkLibraryError")
+			}
+		}
+	}
+	
 	func testTaskThrowsError() {
 		// Given
 		MockURLProtocol.requestHandler = { request in
@@ -123,7 +225,7 @@ final class URLSessionRouterTests: XCTestCase {
 		wait(for: [promise], timeout: 1)
 	}
 	
-	func testRunBadTaskEndpoint() {
+	func testBadUrlInitializationFailed() {
 		// Given
 		let badURL = "\\\\///////asdasdsdasd"
 		// When

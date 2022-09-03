@@ -49,6 +49,20 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
 		wait(for: [promise], timeout: 1)
 	}
 	
+	func testVoidTaskSuccessAsync() async throws {
+		// Given
+		let data = "Success".data(using: .utf8)!
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 200,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		// When & Then
+		try await sut.performVoidTask(to: MockEnpoint.mock)
+	}
+	
 	func testVoidTaskFailed() {
 		// Given
 		let data = "Failure".data(using: .utf8)!
@@ -69,6 +83,25 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
 			promise.fulfill()
 		}
 		wait(for: [promise], timeout: 1)
+	}
+	
+	func testVoidTaskFailedAsync() async throws {
+		// Given
+		let data = "Failure".data(using: .utf8)!
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 404,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		// When
+		do {
+			try await sut.performVoidTask(to: MockEnpoint.mock)
+		} catch {
+			// Then
+			XCTAssertNotNil(error)
+		}
 	}
 	
 	func testDecodableTaskSuccess() {
@@ -96,6 +129,23 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
 		wait(for: [promise], timeout: 1)
 	}
 	
+	func testDecodableTaskSuccessAsync() async throws {
+		// Given
+		let mockModel = MockModel(stub: "Test Model")
+		let data = try! JSONEncoder().encode(mockModel)
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 200,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		// When
+		let result: MockModel = try await sut.performTask(to: MockEnpoint.mock)
+		// Then
+		XCTAssertEqual(result, mockModel)
+	}
+	
 	func testDecodableTaskFailed() {
 		// Given
 		let mockModel = MockModel(stub: "Test Model")
@@ -121,6 +171,27 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
 		wait(for: [promise], timeout: 1)
 	}
 	
+	func testDecodableTaskFailedAsync() async throws {
+		// Given
+		let mockModel = MockModel(stub: "Test Model")
+		let data = try! JSONEncoder().encode(mockModel)
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 404,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		do {
+			// When
+			let _: MockModel = try await sut.performTask(to: MockEnpoint.mock)
+		} catch {
+			// Then
+			print(error)
+			XCTAssertNotNil(error)
+		}
+	}
+	
 	func testDecodingError() {
 		// Given
 		let mockModel = MockModel(stub: "Test Model")
@@ -143,6 +214,30 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
 		// When
 		sut.performTask(to: MockEnpoint.mock, completion: handler)
 		wait(for: [promise], timeout: 1)
+	}
+	
+	func testDecodingErrorAsync() async throws {
+		// Given
+		let mockModel = MockModel(stub: "Test Model")
+		let data = try! JSONEncoder().encode(mockModel)
+		MockURLProtocol.requestHandler = { request in
+			let response = HTTPURLResponse(url: request.url!,
+										   statusCode: 200,
+										   httpVersion: "HTTP/2.0",
+										   headerFields: nil)!
+			return (response, data)
+		}
+		do {
+			// When
+			let _: MockModel2 = try await sut.performTask(to: MockEnpoint.mock)
+		} catch {
+			// Then
+			if let networkLibraryError = error as? NetworkLibraryError {
+				XCTAssertEqual(networkLibraryError, .decodingFaield)
+			} else {
+				XCTFail("Error should be of type NetworkLibraryError")
+			}
+		}
 	}
 }
 

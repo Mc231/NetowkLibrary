@@ -3,7 +3,7 @@
 //  NetworkLibrary
 //
 //  Created by Volodymyr Shyrochuk on 3/09/22.
-//  Copyright © 2019 Volodymyr Shyrochuk. All rights reserved.
+//  Copyright © 2022 Volodymyr Shyrochuk. All rights reserved.
 //
 
 import Foundation

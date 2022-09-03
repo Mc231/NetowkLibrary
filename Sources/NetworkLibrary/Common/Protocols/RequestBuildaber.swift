@@ -12,8 +12,9 @@ import Foundation
  Base protocol for building request
  */
 public protocol RequestBuilder {
-	/**
-	 Creates URLRequest from specific endpoint
-	 */
+    /**
+     Creates URLRequest from specific endpoint
+     - parameter endpoint: Endpoint to bbuild
+     */
     func buildFromEndpoint(_ endpoint: EndPoint) throws -> URLRequest
 }

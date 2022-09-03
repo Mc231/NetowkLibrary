@@ -9,17 +9,21 @@
 import Foundation
 
 /**
-	Describes base functionallity of NetworkRouter
+ Describes base functionality of NetworkRouter
  */
 public protocol NetworkRouter: AnyObject {
     /// Network Manager that is responsible for request logic
     associatedtype Manager
     /// Network Task
     associatedtype Task
-    
+    /// Manager that will perform requests
     var manager: Manager { get set }
-    
-    @discardableResult
-	func performTask<Endpoint: EndPoint>(to endpoint: Endpoint, completion: @escaping NetworkRouterCompletionWithResponse) -> Task?
-}
 
+    /**
+     Perform endpoint task
+     - parameters endpoint: Endpoint where request will be done
+     - parameter completion: Completion block that will be returned when response was received or error occurred
+     */
+    @discardableResult
+    func performTask<Endpoint: EndPoint>(to endpoint: Endpoint, completion: @escaping NetworkRouterCompletionWithResponse) -> Task?
+}

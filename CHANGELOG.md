@@ -6,12 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [Version 1.0.2] - 2022-09-03
+### Added
+- Documentation to missing code
+- Run swiftformat
+- Run swiftlint
+### Fixed
+- Fixed Typos
 
 ## [Version 1.0.1] - 2022-09-03
-### Firmware
+### Added
 - Added async await support for URLSessionRouter
 
 
 ## [Version 1.0.0] - 2022-09-03
-### Firmware
+### Added
 - Initial version

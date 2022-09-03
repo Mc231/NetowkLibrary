@@ -10,9 +10,9 @@ import Foundation
 // Fake models
 
 struct MockModel: Codable, Equatable {
-	let stub: String
+    let stub: String
 }
 
 struct MockModel2: Codable {
-	let stub: Int
+    let stub: Int
 }

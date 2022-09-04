@@ -14,13 +14,13 @@ final class URLRequest_AdditionsTests: XCTestCase {
         return ["stub": invalidValue]
     }
 
-    private var sut: URLRequest!
+    private var sut: URLRequest?
 
     override func setUp() {
         super.setUp()
         let url = URL(string: "stub.stub.stub")!
         sut = URLRequest(url: url)
-        sut.url = nil
+        sut?.url = nil
     }
 
     override func tearDown() {
@@ -30,18 +30,18 @@ final class URLRequest_AdditionsTests: XCTestCase {
 
     func testAddNilHeadersFailed() {
         // Given
-        XCTAssertNil(sut.allHTTPHeaderFields)
+        XCTAssertNil(sut?.allHTTPHeaderFields)
         // When
-        sut.addAdditionalHeaders(nil)
+        sut?.addAdditionalHeaders(nil)
         // Then
-        XCTAssertNil(sut.allHTTPHeaderFields)
+        XCTAssertNil(sut?.allHTTPHeaderFields)
     }
 
     func testEncodeUrlParametersFailed() {
         // Given
         let promise = expectation(description: "wait for encode url error")
         // When
-        XCTAssertThrowsError(try sut.encodeUrlParameters(["": ""]), "Must throw invalid url") { error in
+        XCTAssertThrowsError(try sut?.encodeUrlParameters(["": ""]), "Must throw invalid url") { error in
             // Then
             XCTAssertEqual(error as? NetworkLibraryError, .invalidUrl)
             promise.fulfill()
@@ -53,7 +53,7 @@ final class URLRequest_AdditionsTests: XCTestCase {
         // Given
         let promise = expectation(description: "wait for encode params error")
         // When
-        XCTAssertThrowsError(try sut.encodeBodyParameters(invalidParams), "Must throw encoding failed") { error in
+        XCTAssertThrowsError(try sut?.encodeBodyParameters(invalidParams), "Must throw encoding failed") { error in
             // Then
             XCTAssertEqual(error as? NetworkLibraryError, .encodingFailed)
             promise.fulfill()

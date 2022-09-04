@@ -49,7 +49,7 @@ public class DefaultRequestBuilder: RequestBuilder {
         case let .requestWithEncodableParameters(body, strategy):
             request.httpBody = body.asData(encodingStrategy: strategy)
         case let .upload(body):
-            let data = body.build()
+            let data = try body.build()
             let contentLength = (data as NSData).length
             request.setValue("\(HTTPHeaderValue.multipartFromData); boundary=\(body.boundary)", forHTTPHeaderField: HTTPHeader.contentType)
             request.setValue("\(contentLength)", forHTTPHeaderField: HTTPHeader.contentLength)
@@ -61,12 +61,12 @@ public class DefaultRequestBuilder: RequestBuilder {
     }
 
     private func encode(urlParameters: Parameters?, bodyParameters: Parameters?, request: inout URLRequest) throws {
-        if urlParameters != nil {
-            try request.encodeUrlParameters(urlParameters!)
+        if let urlParameters = urlParameters {
+            try request.encodeUrlParameters(urlParameters)
         }
 
-        if bodyParameters != nil {
-            try request.encodeBodyParameters(bodyParameters!)
+        if let bodyParameters = bodyParameters {
+            try request.encodeBodyParameters(bodyParameters)
         }
     }
 }

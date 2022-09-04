@@ -22,11 +22,11 @@ class MultipartBodyTests: XCTestCase {
         super.tearDown()
     }
 
-    func testBuildBodySuccess() {
+    func testBuildBodySuccess() throws {
         // Given
         XCTAssertNotNil(sut)
         // When
-        let data = sut.build()
+        let data = try sut.build()
         // Then
         XCTAssertNotNil(data)
     }

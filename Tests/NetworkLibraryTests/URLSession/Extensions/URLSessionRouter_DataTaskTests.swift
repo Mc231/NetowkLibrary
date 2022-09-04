@@ -103,10 +103,10 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
         }
     }
 
-    func testDecodableTaskSuccess() {
+    func testDecodableTaskSuccess() throws {
         // Given
         let mockModel = MockModel(stub: "Test Model")
-        let data = try! JSONEncoder().encode(mockModel)
+        let data = try JSONEncoder().encode(mockModel)
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!,
                                            statusCode: 200,
@@ -131,7 +131,7 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
     func testDecodableTaskSuccessAsync() async throws {
         // Given
         let mockModel = MockModel(stub: "Test Model")
-        let data = try! JSONEncoder().encode(mockModel)
+        let data = try JSONEncoder().encode(mockModel)
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!,
                                            statusCode: 200,
@@ -145,10 +145,10 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
         XCTAssertEqual(result, mockModel)
     }
 
-    func testDecodableTaskFailed() {
+    func testDecodableTaskFailed() throws {
         // Given
         let mockModel = MockModel(stub: "Test Model")
-        let data = try! JSONEncoder().encode(mockModel)
+        let data = try JSONEncoder().encode(mockModel)
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!,
                                            statusCode: 404,
@@ -173,7 +173,7 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
     func testDecodableTaskFailedAsync() async throws {
         // Given
         let mockModel = MockModel(stub: "Test Model")
-        let data = try! JSONEncoder().encode(mockModel)
+        let data = try JSONEncoder().encode(mockModel)
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!,
                                            statusCode: 404,
@@ -191,10 +191,10 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
         }
     }
 
-    func testDecodingError() {
+    func testDecodingError() throws {
         // Given
         let mockModel = MockModel(stub: "Test Model")
-        let data = try! JSONEncoder().encode(mockModel)
+        let data = try JSONEncoder().encode(mockModel)
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!,
                                            statusCode: 200,
@@ -218,7 +218,7 @@ class URLSessionRouter_DataTaskTests: XCTestCase {
     func testDecodingErrorAsync() async throws {
         // Given
         let mockModel = MockModel(stub: "Test Model")
-        let data = try! JSONEncoder().encode(mockModel)
+        let data = try JSONEncoder().encode(mockModel)
         MockURLProtocol.requestHandler = { request in
             let response = HTTPURLResponse(url: request.url!,
                                            statusCode: 200,

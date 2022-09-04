@@ -13,27 +13,31 @@ import Foundation
  */
 public struct MultipartBody {
     public static let fileKey = "file"
+	public static let defaultMimeType = "application/octet-stream"
 
     private let parameters: Parameters
     private let fileKeyPath: String
     private let fileUrls: [URL]
+	private let mimeType: String
     public var boundary: String
 
     public init(parameters: Parameters = [:],
                 fileKeyPath: String = MultipartBody.fileKey,
-                fileUrls: [URL]) {
+                fileUrls: [URL],
+				mimeType: String = MultipartBody.defaultMimeType) {
         self.parameters = parameters
         self.fileKeyPath = fileKeyPath
         self.fileUrls = fileUrls
+		self.mimeType = mimeType
         boundary = "Boundary-\(UUID().uuidString)"
     }
 
-    public func build() -> Data {
+    public func build() throws -> Data {
         var body = Data()
         if !parameters.isEmpty {
             appendParameters(body: &body, boundary: boundary)
         }
-        appendFileUrls(body: &body, boundary: boundary)
+        try appendFileUrls(body: &body, boundary: boundary)
         body.append("--\(boundary)--\r\n")
         return body
     }
@@ -46,12 +50,11 @@ public struct MultipartBody {
         }
     }
 
-    private func appendFileUrls(body: inout Data, boundary: String) {
+    private func appendFileUrls(body: inout Data, boundary: String) throws {
         for url in fileUrls {
             let fileName = url.lastPathComponent
             // Fore unwrap try because url is validated and can not be nil
-            let data = try! Data(contentsOf: url)
-            let mimeType = MimeTypeUtils.mimeType(for: url.path)
+            let data = try Data(contentsOf: url)
             body.append("--\(boundary)\r\n")
             body.append("Content-Disposition: form-data; name=\"\(fileKeyPath)\"; filename=\"\(fileName)\"\r\n")
             body.append("Content-Type: \(mimeType)\r\n\r\n")

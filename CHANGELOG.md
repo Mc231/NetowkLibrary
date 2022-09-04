@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [Version 1.0.5] - 2022-09-04
+### Changed
+- Removed MimeType utils
+- Fixed swiftlint warnings
+
+
 ## [Version 1.0.4] - 2022-09-04
 ### Changed
 - Minimum iOS version to 11

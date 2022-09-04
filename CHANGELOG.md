@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [Version 1.0.4] - 2022-09-04
+### Changed
+- Minimum iOS version to 11
+- Minimum tvOS version to 11
+
 ## [Version 1.0.3] - 2022-09-03
 ### Changed
 - Swift tool version from 5.7.0 to 5.5.0

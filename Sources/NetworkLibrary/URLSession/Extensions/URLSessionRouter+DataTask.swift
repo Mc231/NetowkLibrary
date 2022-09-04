@@ -47,7 +47,7 @@ public extension NetworkRouter where Self.Task == URLSessionTask {
      */
     @discardableResult
     func performTask<Endpoint: EndPoint, T: Decodable>(to endpoint: Endpoint,
-                                                       decodingStrategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase,
+                                                       decodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
                                                        completion: @escaping (Result<T, Error>) -> Swift.Void) -> URLSessionTask? {
         return performTask(to: endpoint, completion: { result in
             switch result {
@@ -136,7 +136,7 @@ public extension NetworkRouter where Self.Task == URLSessionTask {
      - returns Decodable model or throw error
      */
     func performTask<Endpoint: EndPoint, T: Decodable>(to endpoint: Endpoint,
-                                                       decodingStrategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase) async throws -> T {
+                                                       decodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys) async throws -> T {
         return try await withCheckedThrowingContinuation { [weak self] (continuation: CheckedContinuation<T, Error>) in
             self?.performTask(to: endpoint) { result in
                 switch result {

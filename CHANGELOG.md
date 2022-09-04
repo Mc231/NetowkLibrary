@@ -6,9 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [Version 1.0.8] - 2022-09-04
+### Changed
+- Replaced default keyEncoding & keyDecoding strategy with useDefaultKeys
+
 ## [Version 1.0.7] - 2022-09-04
 ### Changed
-- Changed ResponseEntry fiealds to public
+- Changed ResponseEntry fields to public
 
 ## [Version 1.0.6] - 2022-09-04
 ### Changed

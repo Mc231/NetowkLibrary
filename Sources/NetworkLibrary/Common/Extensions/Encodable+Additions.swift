@@ -13,7 +13,7 @@ public extension Encodable {
      Convert Encodable to Data representation
      - parameter encodingStrategy: Strategy to convert keys
      */
-    func asData(encodingStrategy: JSONEncoder.KeyEncodingStrategy = .convertToSnakeCase) -> Data? {
+    func asData(encodingStrategy: JSONEncoder.KeyEncodingStrategy = .useDefaultKeys) -> Data? {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = encodingStrategy
         return try? encoder.encode(self)
@@ -24,7 +24,7 @@ public extension Encodable {
      - parameter encodingStrategy: Strategy to convert keys
      - parameter jsonSerializationOptions: Options to serialize JSON
      */
-    func asDictionary(encodingStrategy: JSONEncoder.KeyEncodingStrategy = .convertToSnakeCase,
+    func asDictionary(encodingStrategy: JSONEncoder.KeyEncodingStrategy = .useDefaultKeys,
                       jsonSerializationOptions: JSONSerialization.ReadingOptions = .allowFragments) -> [String: Any]? {
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = encodingStrategy

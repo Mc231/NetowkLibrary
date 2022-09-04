@@ -10,7 +10,7 @@ import Foundation
 /// Contains response and its body representation
 public struct ResponseEntry {
     /// Response body data
-    let data: Data
+    public let data: Data
     /// Response of request
-    let response: URLResponse
+    public let response: URLResponse
 }

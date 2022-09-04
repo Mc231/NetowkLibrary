@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [Version 1.0.7] - 2022-09-04
+### Changed
+- Changed ResponseEntry fiealds to public
+
 ## [Version 1.0.6] - 2022-09-04
 ### Changed
 - Now URLSessionRouter async extensions are visible outside of the module

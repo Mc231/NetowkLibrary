@@ -1,6 +1,6 @@
 # NetworkLibrary
 
-[![UnitTests](https://github.com/Mc231/NetworkLibrary/actions/workflows/unit_tests.yml/badge.svg?branch=master)](https://github.com/Mc231/NetworkLibrary/actions/workflows/unit_tests.yml)
+[![UnitTests](https://github.com/Mc231/NetworkLibrary/actions/workflows/unit_tests.yml/badge.svg?branch=master)](https://github.com/Mc231/NetworkLibrary/actions/workflows/unit_tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 Simple lightweight implementation that could be used as a network layer, completely covered with unit tests.
 
@@ -199,3 +199,7 @@ router.performVoidTask(to: Endpoint.request) { result in
 // Request without parsing body
 try await router.performVoidTask(to: Endpoint.request)
 ```
+
+## License
+
+This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.

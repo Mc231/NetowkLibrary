@@ -8,7 +8,7 @@
 import Foundation
 
 /// Contains response and its body representation
-struct ResponseEntry {
+public struct ResponseEntry {
     /// Response body data
     let data: Data
     /// Response of request

@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [Version 1.0.6] - 2022-09-04
+### Changed
+- Now URLSessionRouter async extensions are visible outside of the module
+
 ## [Version 1.0.5] - 2022-09-04
 ### Changed
 - Removed MimeType utils

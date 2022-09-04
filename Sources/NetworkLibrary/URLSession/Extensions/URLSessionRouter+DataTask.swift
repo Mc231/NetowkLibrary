@@ -71,7 +71,7 @@ public extension NetworkRouter where Self.Task == URLSessionTask {
 
 @available(macOS 10.15.0, *)
 @available(iOS 15, *)
-extension NetworkRouter where Self.Task == URLSessionTask {
+public extension NetworkRouter where Self.Task == URLSessionTask {
     /**
      Perform async task to specific endpoint
      - parameter endpoint: Endpoint where to make request

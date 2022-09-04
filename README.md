@@ -202,4 +202,4 @@ try await router.performVoidTask(to: Endpoint.request)
 
 ## License
 
-This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more info.
+This project is licensed under the MIT license. See the [LICENSE](https://github.com/Mc231/NetworkLibrary/blob/master/LICENSE.md) file for more info.

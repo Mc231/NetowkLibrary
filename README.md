@@ -87,6 +87,33 @@ Create router to perform requests
 There are 2 possible ways of performing request
  * Using completion callbacks
  * Using async/await
+ 
+### Perform Request and parse response as decodable model
+
+This variation allow to perform request and parse response as decodable model
+
+#### Completion block variation
+ 
+```swift
+// Request with decoded body as Decodable model, you can also provide key decoding strategy default on is .useDefaultKeys
+router.performTask(to: Endpoint.request) { result in
+    switch result {
+    case let .success(decodable):
+      // Decodable representation of response
+    case let .failure(error):
+      // Handle Error
+      print(error)
+    }
+}
+```
+
+#### Async Await variation
+
+```swift
+// Request with decoded body as Decodable model, you can also provide key decoding strategy default on is .useDefaultKeys
+let result: SomeModel =  try await router.performTask(to: Endpoint.request)
+print(result)
+```
 
 ### Perform Request with response
 
@@ -172,32 +199,3 @@ router.performVoidTask(to: Endpoint.request) { result in
 // Request without parsing body
 try await router.performVoidTask(to: Endpoint.request)
 ```
-
-### Perform Request and parse response as decodable model
-
-This variation allow to perform request and parse response as decodable model
-
-#### Completion block variation
-
-```swift
-// Request with decoded body as Decodable model, you can also provide key decoding strategy default on is .useDefaultKeys
-router.performTask(to: Endpoint.request) { result in
-    switch result {
-    case let .success(decodable):
-      // Decodable representation of response
-    case let .failure(error):
-      // Handle Error
-      print(error)
-    }
-}
-```
-
-#### Async Await variation
-
-```swift
-// Request with decoded body as Decodable model, you can also provide key decoding strategy default on is .useDefaultKeys
-let result: SomeModel =  try await router.performTask(to: Endpoint.request)
-print(result)
-```
-
-
